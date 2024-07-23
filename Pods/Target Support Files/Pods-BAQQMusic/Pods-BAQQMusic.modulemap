@@ -1,0 +1,6 @@
+framework module Pods_BAQQMusic {
+  umbrella header "Pods-BAQQMusic-umbrella.h"
+
+  export *
+  module * { export * }
+}
