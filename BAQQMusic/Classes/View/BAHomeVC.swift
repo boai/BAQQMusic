@@ -10,7 +10,6 @@ import Foundation
 
 class BAHomeVC: UIViewController {
     
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -39,8 +38,8 @@ class BAHomeVC: UIViewController {
     }()
     
     @objc func onDetail() {
-        
-        self.navigationController?.pushViewController(BAMusicPlayVC(), animated: true)
-//        self.navigationController?.pushViewController(PlayMusicViewController(), animated: true)
+        let vc = BAMusicPlayVC2()
+        vc.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(vc, animated: true)
     }
 }

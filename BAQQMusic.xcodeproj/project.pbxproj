@@ -62,11 +62,11 @@
 		C47AD2D92C4DE81500FA0B42 /* 120125029.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C47AD2A32C4DE81500FA0B42 /* 120125029.mp3 */; };
 		C47AD2DA2C4DE81500FA0B42 /* 1201111234.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C47AD2A42C4DE81500FA0B42 /* 1201111234.mp3 */; };
 		C47AD2DB2C4DE81500FA0B42 /* Musics.plist in Resources */ = {isa = PBXBuildFile; fileRef = C47AD2A62C4DE81500FA0B42 /* Musics.plist */; };
-		C47AD2DD2C4E085C00FA0B42 /* BAMusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47AD2DC2C4E085C00FA0B42 /* BAMusicManager.swift */; };
-		C47AD2DF2C4E479100FA0B42 /* BAMusicPlayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47AD2DE2C4E479100FA0B42 /* BAMusicPlayVC.swift */; };
-		C47AD2E12C4E5AF600FA0B42 /* BAMusicPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47AD2E02C4E5AF600FA0B42 /* BAMusicPlayView.swift */; };
 		C47AD2E32C4F430600FA0B42 /* BAMusicPlayerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47AD2E22C4F430600FA0B42 /* BAMusicPlayerHeader.swift */; };
 		C4F8D1FE2C4F78B400F5204E /* BAHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D1FD2C4F78B400F5204E /* BAHomeVC.swift */; };
+		C4F8D2002C4F94FF00F5204E /* BAAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D1FF2C4F94FF00F5204E /* BAAudioPlayer.swift */; };
+		C4F8D2022C4F961700F5204E /* BAMusicPlayVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2012C4F961700F5204E /* BAMusicPlayVC2.swift */; };
+		C4F8D2042C4F9EC400F5204E /* BAMusicPlayView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2032C4F9EC400F5204E /* BAMusicPlayView2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,11 +129,11 @@
 		C47AD2A32C4DE81500FA0B42 /* 120125029.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 120125029.mp3; sourceTree = "<group>"; };
 		C47AD2A42C4DE81500FA0B42 /* 1201111234.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 1201111234.mp3; sourceTree = "<group>"; };
 		C47AD2A62C4DE81500FA0B42 /* Musics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Musics.plist; sourceTree = "<group>"; };
-		C47AD2DC2C4E085C00FA0B42 /* BAMusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicManager.swift; sourceTree = "<group>"; };
-		C47AD2DE2C4E479100FA0B42 /* BAMusicPlayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayVC.swift; sourceTree = "<group>"; };
-		C47AD2E02C4E5AF600FA0B42 /* BAMusicPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayView.swift; sourceTree = "<group>"; };
 		C47AD2E22C4F430600FA0B42 /* BAMusicPlayerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayerHeader.swift; sourceTree = "<group>"; };
 		C4F8D1FD2C4F78B400F5204E /* BAHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAHomeVC.swift; sourceTree = "<group>"; };
+		C4F8D1FF2C4F94FF00F5204E /* BAAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BAAudioPlayer.swift; path = ../../../../BAQQMusic2/BAQQMusic/Classes/Tools/BAAudioPlayer.swift; sourceTree = "<group>"; };
+		C4F8D2012C4F961700F5204E /* BAMusicPlayVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayVC2.swift; sourceTree = "<group>"; };
+		C4F8D2032C4F9EC400F5204E /* BAMusicPlayView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayView2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,7 +205,7 @@
 				C47AD26E2C4DE81300FA0B42 /* CALayer-Extension.swift */,
 				C47AD26F2C4DE81300FA0B42 /* Extension+TimeInterval.swift */,
 				C47AD2702C4DE81300FA0B42 /* LrcTools.swift */,
-				C47AD2DC2C4E085C00FA0B42 /* BAMusicManager.swift */,
+				C4F8D1FF2C4F94FF00F5204E /* BAAudioPlayer.swift */,
 				C47AD2E22C4F430600FA0B42 /* BAMusicPlayerHeader.swift */,
 			);
 			path = Tools;
@@ -216,9 +216,9 @@
 			children = (
 				C47AD2732C4DE81300FA0B42 /* LrcScrollView.swift */,
 				C47AD2742C4DE81300FA0B42 /* LrcViewCell.swift */,
-				C47AD2E02C4E5AF600FA0B42 /* BAMusicPlayView.swift */,
-				C47AD2DE2C4E479100FA0B42 /* BAMusicPlayVC.swift */,
+				C4F8D2032C4F9EC400F5204E /* BAMusicPlayView2.swift */,
 				C4F8D1FD2C4F78B400F5204E /* BAHomeVC.swift */,
+				C4F8D2012C4F961700F5204E /* BAMusicPlayVC2.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -478,17 +478,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4F8D2022C4F961700F5204E /* BAMusicPlayVC2.swift in Sources */,
 				C47AD25C2C4DE80700FA0B42 /* ViewController.swift in Sources */,
 				C47AD2582C4DE80700FA0B42 /* AppDelegate.swift in Sources */,
+				C4F8D2002C4F94FF00F5204E /* BAAudioPlayer.swift in Sources */,
 				C47AD2B12C4DE81500FA0B42 /* MusicListViewModel.swift in Sources */,
 				C47AD2AC2C4DE81500FA0B42 /* LrcTools.swift in Sources */,
-				C47AD2DF2C4E479100FA0B42 /* BAMusicPlayVC.swift in Sources */,
+				C4F8D2042C4F9EC400F5204E /* BAMusicPlayView2.swift in Sources */,
 				C47AD2AA2C4DE81500FA0B42 /* CALayer-Extension.swift in Sources */,
 				C47AD2AB2C4DE81500FA0B42 /* Extension+TimeInterval.swift in Sources */,
 				C47AD2AE2C4DE81500FA0B42 /* LrcScrollView.swift in Sources */,
 				C47AD2A92C4DE81500FA0B42 /* MusicModel.swift in Sources */,
-				C47AD2DD2C4E085C00FA0B42 /* BAMusicManager.swift in Sources */,
-				C47AD2E12C4E5AF600FA0B42 /* BAMusicPlayView.swift in Sources */,
 				C47AD2AF2C4DE81500FA0B42 /* LrcViewCell.swift in Sources */,
 				C47AD2E32C4F430600FA0B42 /* BAMusicPlayerHeader.swift in Sources */,
 				C4F8D1FE2C4F78B400F5204E /* BAHomeVC.swift in Sources */,
