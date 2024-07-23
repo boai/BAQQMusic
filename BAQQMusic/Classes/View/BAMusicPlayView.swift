@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import SnapKit
 
-class BAMusicPlayView2: UIView {
+class BAMusicPlayView: UIView {
             
     var onBackBlock: (() -> Void)?
     
@@ -226,7 +226,7 @@ class BAMusicPlayView2: UIView {
     }()
 }
 
-extension BAMusicPlayView2 {
+extension BAMusicPlayView {
     //歌曲界面信息
     func updateData(_ music: MusicModel) {
         songNameLabel.text = music.name
@@ -248,7 +248,7 @@ extension BAMusicPlayView2 {
 }
 
 //MARK: 播放器
-extension BAMusicPlayView2 {
+extension BAMusicPlayView {
     
     @objc func onPlayOrPause() {
         play(isPlaying: BAAudioPlayer.shared.player.isPlaying)
@@ -334,7 +334,7 @@ extension BAMusicPlayView2 {
 }
 
 //MARK: UI
-extension BAMusicPlayView2 {
+extension BAMusicPlayView {
     
     func layoutUI() {
         self.addSubview(bgView)

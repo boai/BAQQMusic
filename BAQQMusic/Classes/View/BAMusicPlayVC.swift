@@ -1,5 +1,5 @@
 //
-//  BAMusicPlayVC2.swift
+//  BAMusicPlayVC.swift
 //  BAQQMusic
 //
 //  Created by boai on 2024/7/23.
@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import AVFAudio
 
-class BAMusicPlayVC2: UIViewController {
+class BAMusicPlayVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class BAMusicPlayVC2: UIViewController {
     }
     
     lazy var playView = {
-        let view = BAMusicPlayView2()
+        let view = BAMusicPlayView()
         
         view.onBackBlock = { [weak self] in
             guard let self = self else { return }
@@ -57,13 +57,13 @@ class BAMusicPlayVC2: UIViewController {
     
 }
 
-extension BAMusicPlayVC2 {
+extension BAMusicPlayVC {
     
     
 }
 
 //MARK: AVAudioPlayerDelegate
-extension BAMusicPlayVC2: AVAudioPlayerDelegate {
+extension BAMusicPlayVC: AVAudioPlayerDelegate {
     //播放器播放完毕后就会调用该方法
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
@@ -84,7 +84,7 @@ extension BAMusicPlayVC2: AVAudioPlayerDelegate {
 }
 
 //MARK: 加载数据
-extension BAMusicPlayVC2 {
+extension BAMusicPlayVC {
     func loadData(callback:(_ result:Bool) ->()) {
         let filePath = Bundle.main.path(forResource: "Musics.plist", ofType: nil)
         guard (filePath != nil) else {

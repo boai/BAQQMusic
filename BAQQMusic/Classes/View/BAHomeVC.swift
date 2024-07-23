@@ -38,7 +38,7 @@ class BAHomeVC: UIViewController {
     }()
     
     @objc func onDetail() {
-        let vc = BAMusicPlayVC2()
+        let vc = BAMusicPlayVC()
         vc.modalPresentationStyle = .fullScreen
         self.navigationController?.present(vc, animated: true)
     }
