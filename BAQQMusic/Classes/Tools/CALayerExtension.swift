@@ -1,9 +1,8 @@
 //
-//  CALayer-Extension.swift
-//  qqMusic
+//  CALayerExtension.swift
+//  BAQQMusic
 //
-//  Created by Ann on 2017/9/21.
-//  Copyright © 2017年 Ann. All rights reserved.
+//  Created by boai on 2024/7/23.
 //
 
 
@@ -11,7 +10,6 @@ import UIKit
 
 extension CALayer {
     func pauseAnim() {
-        
         let pausedTime = convertTime(CACurrentMediaTime(), from: nil)
         speed = 0.0
         timeOffset = pausedTime

@@ -12,7 +12,6 @@ import SnapKit
 class BAMusicPlayView: UIView {
             
     var onBackBlock: (() -> Void)?
-    
     var rotationAnim:CABasicAnimation?
 
     override init(frame: CGRect) {
@@ -38,9 +37,8 @@ class BAMusicPlayView: UIView {
         BAAudioPlayer.shared.onUpdageProgress = { [weak self] progress in
             guard let self = self else { return }
             
-            let currentTime = BAAudioPlayer.shared.getCurrentTime().stringByTime()
-            let totalTime = BAAudioPlayer.shared.getDuration().stringByTime()
-
+//            let currentTime = BAAudioPlayer.shared.getCurrentTime().stringByTime()
+//            let totalTime = BAAudioPlayer.shared.getDuration().stringByTime()
 //            print("当前播放进度：（\(currentTime)/\(totalTime)），progress：\(progress)")
             if progress >= 1 {
                 print("当前歌曲播放完毕，自动播放下一首！")
@@ -51,12 +49,6 @@ class BAMusicPlayView: UIView {
                     self.slider.value = progress
                 }
             }
-        }
-        
-        //更新歌词进度
-        BAAudioPlayer.shared.onUpdageLrc = { [weak self] time in
-            guard let self = self else { return }
-            
         }
     }
     
@@ -153,9 +145,21 @@ class BAMusicPlayView: UIView {
     
     lazy var lrcView: UIView = {
         let view = UIView()
-//        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
+//        view.backgroundColor = .yellow.withAlphaComponent(0.1)
         
         return view
+    }()
+    lazy var lrcLabel:UILabel = {
+        let lb = UILabel()
+        lb.textColor = UIColor.lightGray
+        lb.text = ""
+        return lb
+    }()
+    lazy var lrcLabelTwo:UILabel = {
+        let lb = UILabel()
+        lb.textColor = UIColor.lightGray
+        lb.text = ""
+        return lb
     }()
     
     lazy var bottomView: UIView = {
@@ -235,7 +239,7 @@ class BAMusicPlayView: UIView {
 
 extension BAMusicPlayView {
     //歌曲界面信息
-    func updateData(_ music: MusicModel) {
+    func updateData(_ music: BAMusicModel) {
         songNameLabel.text = music.name
         singerLabel.text = music.singer
         trueImageView.image = UIImage(named: music.icon ?? "")
@@ -249,6 +253,11 @@ extension BAMusicPlayView {
         totalTimeLabel.text = BAAudioPlayer.shared.getDuration().stringByTime()
     }
     
+    func updateIrcs(_ lrcs: [BALrcLineModel]) -> Void {
+        lrcLabel.text = lrcs.first?.lrcText
+        lrcLabelTwo.text = lrcs[1].lrcText
+    }
+    
     @objc func onBack() {
         onBackBlock!()
     }
@@ -258,34 +267,42 @@ extension BAMusicPlayView {
 extension BAMusicPlayView {
     
     @objc func onPlayOrPause() {
-        play(isPlaying: BAAudioPlayer.shared.player.isPlaying)
+        play(isPlaying: BAAudioPlayer.shared.player?.isPlaying ?? false)
     }
     
     func play(isPlaying: Bool) {
         if isPlaying {
             //暂停
-            playOrPauseButton.setImage(UIImage.init(named: "player_btn_play_normal"), for: .normal)
-            
-            //暂停动画旋转
-            trueImageView.layer.pauseAnim()
+            updatePauseView()
             BAAudioPlayer.shared.pause()
         } else {
             //播放
-            playOrPauseButton.setImage(UIImage.init(named: "player_btn_pause_normal"), for: .normal)
-
-            //继续动画旋转
-            trueImageView.layer.resumeAnim()
-            if rotationAnim == nil {
-                addRotationAnim()
-            }
-            
+            updatePlayView()
             BAAudioPlayer.shared.play(BAAudioPlayer.shared.currentMusic)
             updateData(BAAudioPlayer.shared.currentMusic)
         }
+        updateTime()
+    }
+    
+    func updatePlayView() -> Void {
+        playOrPauseButton.setImage(UIImage.init(named: "player_btn_pause_normal"), for: .normal)
+
+        //继续动画旋转
+        trueImageView.layer.resumeAnim()
+        if rotationAnim == nil {
+            addRotationAnim()
+        }
+    }
+    
+    func updatePauseView() -> Void {
+        playOrPauseButton.setImage(UIImage.init(named: "player_btn_play_normal"), for: .normal)
+        
+        //暂停动画旋转
+        trueImageView.layer.pauseAnim()
     }
     
     @objc func onPlayNext() {
-        play(isPlaying: false)
+        updatePauseView()
         slider.value = 0
         
         var index = BAAudioPlayer.shared.currentIndex + 1
@@ -294,11 +311,12 @@ extension BAMusicPlayView {
         }
         BAAudioPlayer.shared.currentIndex = index
         BAAudioPlayer.shared.play(BAAudioPlayer.shared.musicList[index])
+        updatePlayView()
         updateData(BAAudioPlayer.shared.currentMusic)
     }
     
     @objc func onPlayPre() {
-        play(isPlaying: false)
+        updatePauseView()
         slider.value = 0
         
         var index = BAAudioPlayer.shared.currentIndex - 1
@@ -308,6 +326,7 @@ extension BAMusicPlayView {
         
         BAAudioPlayer.shared.currentIndex = index
         BAAudioPlayer.shared.play(BAAudioPlayer.shared.musicList[index])
+        updatePlayView()
         updateData(BAAudioPlayer.shared.currentMusic)
     }
     
@@ -378,16 +397,10 @@ extension BAMusicPlayView {
             make.center.equalToSuperview()
         }
         
-        bgView.addSubview(bottomView)
-        bgView.addSubview(lrcView)
-        lrcView.snp.makeConstraints { (make) in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.top).offset(-10)
-            make.height.equalTo(80)
-        }
-        
         bgView.addSubview(infoView)
-        infoView.snp.makeConstraints { (make) in
+        bgView.addSubview(lrcView)
+        bgView.addSubview(bottomView)
+        infoView.snp.makeConstraints { make in
             make.top.equalTo(naviView.snp.bottom).offset(10)
             make.left.right.equalToSuperview()
             make.bottom.equalTo(lrcView.snp.top).offset(-10)
@@ -413,6 +426,23 @@ extension BAMusicPlayView {
         }
         trueImageView.layer.cornerRadius = CGFloat(120)
         trueImageView.layer.masksToBounds = true
+        
+        lrcView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top).offset(-30)
+            make.height.equalTo(80)
+        }
+        //歌词
+        lrcView.addSubview(lrcLabel)
+        lrcLabel.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(15)
+            make.centerX.equalToSuperview()
+        }
+        lrcView.addSubview(lrcLabelTwo)
+        lrcLabelTwo.snp.makeConstraints { (make) in
+            make.top.equalTo(lrcLabel.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
         
         bottomView.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-(getSafeAreaInsets().bottom + 20))

@@ -1,13 +1,12 @@
 //
-//  LrclineModel.swift
-//  qqMusic
+//  BALrcLineModel.swift
+//  BAQQMusic
 //
-//  Created by Ann on 2017/9/21.
-//  Copyright © 2017年 Ann. All rights reserved.
+//  Created by boai on 2024/7/23.
 //
 
 import Foundation
-class LrclineModel: NSObject {
+class BALrcLineModel: NSObject {
     //一句歌词
     var lrcText:String?
     //一句歌词对于时间
@@ -27,14 +26,9 @@ class LrclineModel: NSObject {
         let str3 = str2.components(separatedBy: ":")
         //
         let minute =  Double(str3[0])
-        
         let second = Double(str3[1].components(separatedBy: ".")[0])
-        
         let ms = Double(str3[1].components(separatedBy: ".")[1])
-        
         let timeSecond = minute! * 60 + second! + ms! * 0.01
         lrcTime = timeSecond
-        
     }
-    
 }

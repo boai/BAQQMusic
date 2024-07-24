@@ -1,15 +1,14 @@
 //
-//  LrcViewCell.swift
-//  qqMusic
+//  BALrcCell.swift
+//  BAQQMusic
 //
-//  Created by Ann on 2017/9/21.
-//  Copyright © 2017年 Ann. All rights reserved.
+//  Created by boai on 2024/7/23.
 //
 
 
 import UIKit
 
-class LrcViewCell: UITableViewCell {
+class BALrcCell: UITableViewCell {
     
     lazy var lrcLabel:UILabel = UILabel()
     
@@ -31,11 +30,25 @@ class LrcViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func layoutSubviews(){
         super.layoutSubviews()
         
         lrcLabel.sizeToFit()
         lrcLabel.center = contentView.center
+    }    
+}
+
+extension BALrcCell {
+    
+    func updateLine(lrcModel: BALrcLineModel, isCurrent: Bool) -> Void {
+        if isCurrent {
+            lrcLabel.font = UIFont.systemFont(ofSize: 17.0)
+            lrcLabel.textColor = UIColor.green
+        } else {
+            lrcLabel.textColor = UIColor.gray
+            lrcLabel.font = UIFont.systemFont(ofSize: 14.0)
+        }
+        lrcLabel.text = lrcModel.lrcText
     }
+    
 }

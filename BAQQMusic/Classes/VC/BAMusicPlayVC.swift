@@ -53,18 +53,23 @@ class BAMusicPlayVC: UIViewController {
     
     func initData() {
         
+        BAAudioPlayer.shared.onPlaying = { [weak self] in
+            guard let self = self else { return }
+            
+            self.lrcView.lrcFileName = BAAudioPlayer.shared.currentMusic.lrcname
+        }
     }
     
     func initApi() -> Void {
         //加载数据
         loadData { result in
             guard result else {
-                print("数据加载异常，请检查数据")
+                print("\n数据加载异常，请检查数据")
                 return
             }
             
             playView.onPlayOrPause()
-            BAAudioPlayer.shared.player.delegate = self
+            BAAudioPlayer.shared.player?.delegate = self
         }
     }
     
@@ -77,12 +82,23 @@ class BAMusicPlayVC: UIViewController {
             BAAudioPlayer.shared.stop()
             self.dismiss(animated: true)
         }
+        
         return view
     }()
     
     lazy var lrcView = {
         let view = BALrcView()
         
+        view.updateCurrentLrcs = { [weak self] currentLrcs in
+            guard let self = self else { return }
+            
+            var temp:[String] = []
+            for item in currentLrcs {
+                temp.append(item.lrcText ?? "")
+            }
+            print("\n当前歌词：\(temp)")
+            self.playView.updateIrcs(currentLrcs)
+        }
         return view
     }()
     
@@ -103,9 +119,18 @@ extension BAMusicPlayVC: UIScrollViewDelegate {
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let offset_X = scrollView.contentOffset.x;
-        let currentPage = ceil(offset_X/SCREEN_WIDTH)
-        print("当前页面：\(currentPage)")
+        let currentPage = Int(ceil(offset_X/SCREEN_WIDTH))
+        print("\n当前页面：\(currentPage)")
         
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let ratio = scrollView.contentOffset.x / scrollView.bounds.width
+        
+//        lrcLabel.alpha = 1 - ratio
+//        trueImageView.alpha = 1 - ratio
+//        bgImageView.alpha = 1 - ratio
+//        lrcLabelTwo.alpha = 1 - ratio
     }
 }
 
@@ -113,20 +138,11 @@ extension BAMusicPlayVC: UIScrollViewDelegate {
 extension BAMusicPlayVC: AVAudioPlayerDelegate {
     //播放器播放完毕后就会调用该方法
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("\n歌曲(\(String(describing: BAAudioPlayer.shared.currentMusic.name))播放完毕,自动播放下一曲！")
         if flag {
             //播放结束
-            print("当前歌曲播放完毕")
             playView.onPlayNext()
         }
-    }
-    
-    //当播放器遇到中断的时候（如来电），调用该方法
-    func audioPlayerBeginInterruption(_ player: AVAudioPlayer) {
-        playView.onPlayOrPause()
-    }
-    
-    func audioPlayerEndInterruption(_ player: AVAudioPlayer, withOptions flags: Int) {
-        
     }
 }
 
@@ -143,13 +159,13 @@ extension BAMusicPlayVC {
             return
         }
         
-        var temp:[MusicModel] = []
+        var temp:[BAMusicModel] = []
         for dict in array {
             do {
                 // 将字典转换为Data
                 let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
                 // 使用JSONDecoder将Data转换为模型
-                let music: MusicModel = try JSONDecoder().decode(MusicModel.self, from: jsonData)
+                let music: BAMusicModel = try JSONDecoder().decode(BAMusicModel.self, from: jsonData)
                 temp.append(music)
                 // 使用user模型
                 print(music.name ?? "") // 输出: John Doe
@@ -159,7 +175,7 @@ extension BAMusicPlayVC {
         }
         BAAudioPlayer.shared.musicList = temp
         BAAudioPlayer.shared.currentIndex = 0
-        BAAudioPlayer.shared.currentMusic = temp.first ?? MusicModel()
+        BAAudioPlayer.shared.currentMusic = temp.first ?? BAMusicModel()
         callback(true)
     }
 }

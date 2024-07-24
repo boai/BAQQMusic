@@ -7,7 +7,6 @@ target 'BAQQMusic' do
   use_modular_headers!
 
   # Pods for BAQQMusic
-  
   pod 'SnapKit'
   
 end
