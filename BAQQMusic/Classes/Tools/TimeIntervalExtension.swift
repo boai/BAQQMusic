@@ -1,5 +1,5 @@
 //
-//  Extension+TimeInterval.swift
+//  TimeIntervalExtension.swift
 //  BAQQMusic
 //
 //  Created by boai on 2024/7/23.

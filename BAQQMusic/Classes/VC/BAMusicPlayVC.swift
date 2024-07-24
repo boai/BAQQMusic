@@ -21,43 +21,17 @@ class BAMusicPlayVC: UIViewController {
     
     func initUI() {
         
-        view.addSubview(scrollView)
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        scrollView.addSubview(playView)
+       
+        view.addSubview(playView)
         playView.snp.makeConstraints { make in
             make.top.left.equalToSuperview()
             make.width.equalTo(SCREEN_WIDTH)
             make.height.equalTo(SCREEN_HEIGHT)
         }
-        
-        scrollView.addSubview(lrcView)
-        lrcView.snp.makeConstraints { make in
-            make.left.equalTo(playView.snp.right).offset(0)
-            make.top.equalToSuperview()
-            make.width.equalTo(SCREEN_WIDTH)
-            make.height.equalTo(SCREEN_HEIGHT)
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        scrollView.snp.remakeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: SCREEN_HEIGHT)
     }
     
     func initData() {
         
-        BAAudioPlayer.shared.onPlaying = { [weak self] in
-            guard let self = self else { return }
-            
-            self.lrcView.lrcFileName = BAAudioPlayer.shared.currentMusic.lrcname
-        }
     }
     
     func initApi() -> Void {
@@ -75,6 +49,7 @@ class BAMusicPlayVC: UIViewController {
     
     lazy var playView = {
         let view = BAMusicPlayView()
+        view.scrollView.delegate = self
         
         view.onBackBlock = { [weak self] in
             guard let self = self else { return }
@@ -85,34 +60,6 @@ class BAMusicPlayVC: UIViewController {
         
         return view
     }()
-    
-    lazy var lrcView = {
-        let view = BALrcView()
-        
-        view.updateCurrentLrcs = { [weak self] currentLrcs in
-            guard let self = self else { return }
-            
-            var temp:[String] = []
-            for item in currentLrcs {
-                temp.append(item.lrcText ?? "")
-            }
-            print("\n当前歌词：\(temp)")
-            self.playView.updateIrcs(currentLrcs)
-        }
-        return view
-    }()
-    
-    lazy var scrollView = {
-        let scrollView = UIScrollView()
-        scrollView.bounces = true
-        scrollView.isPagingEnabled = true
-        scrollView.isScrollEnabled = true
-        scrollView.delegate = self
-        scrollView.backgroundColor = .yellow.withAlphaComponent(0.1)
-        
-        return scrollView
-    }()
-    
 }
 
 extension BAMusicPlayVC: UIScrollViewDelegate {
@@ -121,16 +68,11 @@ extension BAMusicPlayVC: UIScrollViewDelegate {
         let offset_X = scrollView.contentOffset.x;
         let currentPage = Int(ceil(offset_X/SCREEN_WIDTH))
         print("\n当前页面：\(currentPage)")
-        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let ratio = scrollView.contentOffset.x / scrollView.bounds.width
-        
-//        lrcLabel.alpha = 1 - ratio
-//        trueImageView.alpha = 1 - ratio
-//        bgImageView.alpha = 1 - ratio
-//        lrcLabelTwo.alpha = 1 - ratio
+        playView.updateScrollLrc(ratio)
     }
 }
 

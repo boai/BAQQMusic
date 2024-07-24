@@ -66,7 +66,6 @@
 		C4F8D2022C4F961700F5204E /* BAMusicPlayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2012C4F961700F5204E /* BAMusicPlayVC.swift */; };
 		C4F8D2042C4F9EC400F5204E /* BAMusicPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2032C4F9EC400F5204E /* BAMusicPlayView.swift */; };
 		C4F8D2062C4FC2F800F5204E /* BALrcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2052C4FC2F800F5204E /* BALrcView.swift */; };
-		C4F8D77D2C50AD7400F5204E /* BAMusicListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D77C2C50AD7400F5204E /* BAMusicListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -133,7 +132,6 @@
 		C4F8D2012C4F961700F5204E /* BAMusicPlayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayVC.swift; sourceTree = "<group>"; };
 		C4F8D2032C4F9EC400F5204E /* BAMusicPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayView.swift; sourceTree = "<group>"; };
 		C4F8D2052C4FC2F800F5204E /* BALrcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BALrcView.swift; sourceTree = "<group>"; };
-		C4F8D77C2C50AD7400F5204E /* BAMusicListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BAMusicListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,14 +218,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		C47AD2792C4DE81300FA0B42 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				C4F8D77C2C50AD7400F5204E /* BAMusicListViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		C47AD27A2C4DE81300FA0B42 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,7 +225,6 @@
 				C47AD26D2C4DE81300FA0B42 /* Model */,
 				C47AD2722C4DE81300FA0B42 /* Tools */,
 				C47AD2762C4DE81300FA0B42 /* View */,
-				C47AD2792C4DE81300FA0B42 /* ViewModel */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -357,7 +346,7 @@
 				C47AD2502C4DE80700FA0B42 /* Sources */,
 				C47AD2512C4DE80700FA0B42 /* Frameworks */,
 				C47AD2522C4DE80700FA0B42 /* Resources */,
-				E2B8EBB9F32B9356BC8C94C6 /* [CP] Copy Pods Resources */,
+				EE1BFDCFADC0493EF3EE8CFB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -478,21 +467,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E2B8EBB9F32B9356BC8C94C6 /* [CP] Copy Pods Resources */ = {
+		EE1BFDCFADC0493EF3EE8CFB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BAQQMusic/Pods-BAQQMusic-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BAQQMusic/Pods-BAQQMusic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BAQQMusic/Pods-BAQQMusic-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-BAQQMusic/Pods-BAQQMusic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BAQQMusic/Pods-BAQQMusic-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BAQQMusic/Pods-BAQQMusic-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -516,7 +505,6 @@
 				C47AD2E32C4F430600FA0B42 /* BAMusicPlayerHeader.swift in Sources */,
 				C4F8D1FE2C4F78B400F5204E /* BAHomeVC.swift in Sources */,
 				C47AD2A82C4DE81500FA0B42 /* BALrcLineModel.swift in Sources */,
-				C4F8D77D2C50AD7400F5204E /* BAMusicListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,7 +659,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TN462CL4LQ;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 83U7J454XF;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BAQQMusic/Info.plist;
@@ -691,7 +679,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.boai.music;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = LYVenuciaIOVEnterprise_Dev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = wbiaoLuxury_xing;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -709,7 +697,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = TN462CL4LQ;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 83U7J454XF;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BAQQMusic/Info.plist;
@@ -729,7 +717,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.boai.music;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = LYVenuciaIOVEnterprise_Dev;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = wbiaoLuxury_xing;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

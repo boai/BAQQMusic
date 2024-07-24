@@ -27,9 +27,7 @@ class BAMusicPlayView: UIView {
     
     
     func initUI() {
-        
         layoutUI()
-        
     }
         
     func initData() {
@@ -50,8 +48,24 @@ class BAMusicPlayView: UIView {
                 }
             }
         }
+        
+        //更新歌词进度
+        BAAudioPlayer.shared.onUpdageLrc = { [weak self] time in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.onUpdateLrc()
+            }
+        }
+        
+        BAAudioPlayer.shared.onPlaying = { [weak self] in
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                self.lrcFullView.lrcFileName = BAAudioPlayer.shared.currentMusic.lrcname
+            }
+        }
     }
-    
     
     //MARK: - lazy
     
@@ -126,7 +140,7 @@ class BAMusicPlayView: UIView {
         return lab
     }()
     //CD圆盘边框图层
-    lazy var musicImageView:UIImageView = {
+    lazy var musicImageBgView:UIImageView = {
         let imgV = UIImageView()
         imgV.backgroundColor = UIColor.darkGray
         imgV.isUserInteractionEnabled = true
@@ -235,10 +249,39 @@ class BAMusicPlayView: UIView {
         
         return slider
     }()
+    
+    lazy var lrcFullView = {
+        let view = BALrcView()
+//        view.backgroundColor = .yellow.withAlphaComponent(0.1)
+
+        view.updateCurrentLrcs = { [weak self] currentLrcs in
+            guard let self = self else { return }
+            
+            var temp:[String] = []
+            for item in currentLrcs {
+                temp.append(item.lrcText ?? "")
+            }
+            print("\n当前歌词：\(temp)")
+            updateIrcs(currentLrcs)
+        }
+        return view
+    }()
+    
+    lazy var scrollView = {
+        let scrollView = UIScrollView()
+        scrollView.bounces = true
+        scrollView.isPagingEnabled = true
+        scrollView.isScrollEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: 0)
+
+        return scrollView
+    }()
 }
 
+
+//MARK: - 歌曲界面信息
 extension BAMusicPlayView {
-    //歌曲界面信息
     func updateData(_ music: BAMusicModel) {
         songNameLabel.text = music.name
         singerLabel.text = music.singer
@@ -261,9 +304,17 @@ extension BAMusicPlayView {
     @objc func onBack() {
         onBackBlock!()
     }
+    
+    func updateScrollLrc(_ ratio: CGFloat) -> Void {
+        let alpha = 1 - ratio
+        trueImageView.alpha = alpha
+        musicImageBgView.alpha = alpha
+        lrcLabel.alpha = alpha
+        lrcLabelTwo.alpha = alpha
+    }
 }
 
-//MARK: 播放器
+//MARK: - 播放器
 extension BAMusicPlayView {
     
     @objc func onPlayOrPause() {
@@ -278,6 +329,7 @@ extension BAMusicPlayView {
         } else {
             //播放
             updatePlayView()
+            
             BAAudioPlayer.shared.play(BAAudioPlayer.shared.currentMusic)
             updateData(BAAudioPlayer.shared.currentMusic)
         }
@@ -330,8 +382,9 @@ extension BAMusicPlayView {
         updateData(BAAudioPlayer.shared.currentMusic)
     }
     
+    //获取实时歌曲播放进度时间
     @objc func onUpdateLrc() {
-        
+        lrcFullView.currentTime = BAAudioPlayer.shared.getCurrentTime()
     }
     
     @objc func updateProgress() {
@@ -359,10 +412,11 @@ extension BAMusicPlayView {
     
 }
 
-//MARK: UI
+//MARK: - UI
 extension BAMusicPlayView {
     
     func layoutUI() {
+        
         self.addSubview(bgView)
         bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -410,19 +464,19 @@ extension BAMusicPlayView {
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
         }
-        infoView.addSubview(musicImageView)
-        musicImageView.snp.makeConstraints { make in
+        infoView.addSubview(musicImageBgView)
+        musicImageBgView.snp.makeConstraints { make in
             make.width.height.equalTo(250)
             make.top.equalTo(singerLabel.snp.bottom).offset(25)
             make.centerX.equalToSuperview()
         }
-        musicImageView.layer.cornerRadius = CGFloat(125)
-        musicImageView.layer.masksToBounds = true
+        musicImageBgView.layer.cornerRadius = CGFloat(125)
+        musicImageBgView.layer.masksToBounds = true
         
         infoView.addSubview(trueImageView)
         trueImageView.snp.makeConstraints { make in
             make.width.height.equalTo(240)
-            make.center.equalTo(musicImageView)
+            make.center.equalTo(musicImageBgView)
         }
         trueImageView.layer.cornerRadius = CGFloat(120)
         trueImageView.layer.masksToBounds = true
@@ -482,6 +536,20 @@ extension BAMusicPlayView {
         currentTimeLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(16)
             make.centerY.equalTo(slider.snp.centerY)
+        }
+        
+        bgView.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(singerLabel.snp.bottom).offset(10)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top).offset(-10)
+        }
+        scrollView.addSubview(lrcFullView)
+        lrcFullView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(SCREEN_WIDTH)
+            make.width.equalTo(SCREEN_WIDTH)
+            make.height.equalTo(scrollView)
         }
     }
     

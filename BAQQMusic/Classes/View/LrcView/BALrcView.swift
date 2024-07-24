@@ -84,7 +84,7 @@ class BALrcView: UIView {
     }
     
     func initUI() -> Void {
-        self.backgroundColor = .orange.withAlphaComponent(0.1)
+//        self.backgroundColor = .red.withAlphaComponent(0.01)
         
         self.addSubview(tableView)
         tableView.snp.makeConstraints { make in
