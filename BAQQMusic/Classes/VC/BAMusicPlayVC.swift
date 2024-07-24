@@ -20,8 +20,6 @@ class BAMusicPlayVC: UIViewController {
     }
     
     func initUI() {
-        
-       
         view.addSubview(playView)
         playView.snp.makeConstraints { make in
             make.top.left.equalToSuperview()
@@ -43,7 +41,7 @@ class BAMusicPlayVC: UIViewController {
             }
             
             playView.onPlayOrPause()
-            BAAudioPlayer.shared.player?.delegate = self
+//            BAAudioPlayer.shared.player?.delegate = self
         }
     }
     
@@ -76,17 +74,23 @@ extension BAMusicPlayVC: UIScrollViewDelegate {
     }
 }
 
-//MARK: AVAudioPlayerDelegate
-extension BAMusicPlayVC: AVAudioPlayerDelegate {
-    //播放器播放完毕后就会调用该方法
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        print("\n歌曲(\(String(describing: BAAudioPlayer.shared.currentMusic.name))播放完毕,自动播放下一曲！")
-        if flag {
-            //播放结束
-            playView.onPlayNext()
-        }
-    }
-}
+////MARK: AVAudioPlayerDelegate
+//extension BAMusicPlayVC: AVAudioPlayerDelegate {
+//    //播放完成时调用
+//    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+//        print("\n歌曲(\(String(describing: BAAudioPlayer.shared.currentMusic.name))播放完毕,自动播放下一曲！")
+//        if flag {
+//            //播放结束
+//            playView.onPlayNext()
+//        }
+//    }
+//    
+//    //音频解码发生错误时调用
+//    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: (any Error)?) {
+//       let error = error
+//        
+//    }
+//}
 
 //MARK: 加载数据
 extension BAMusicPlayVC {
@@ -117,7 +121,7 @@ extension BAMusicPlayVC {
         }
         BAAudioPlayer.shared.musicList = temp
         BAAudioPlayer.shared.currentIndex = 0
-        BAAudioPlayer.shared.currentMusic = temp.first ?? BAMusicModel()
+        BAAudioPlayer.shared.currentMusic = temp[3]
         callback(true)
     }
 }

@@ -10,10 +10,10 @@ import Foundation
 import SnapKit
 
 class BAMusicPlayView: UIView {
-            
+    
     var onBackBlock: (() -> Void)?
     var rotationAnim:CABasicAnimation?
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -29,23 +29,15 @@ class BAMusicPlayView: UIView {
     func initUI() {
         layoutUI()
     }
-        
+    
     func initData() {
         //更新进度条
         BAAudioPlayer.shared.onUpdageProgress = { [weak self] progress in
             guard let self = self else { return }
             
-//            let currentTime = BAAudioPlayer.shared.getCurrentTime().stringByTime()
-//            let totalTime = BAAudioPlayer.shared.getDuration().stringByTime()
-//            print("当前播放进度：（\(currentTime)/\(totalTime)），progress：\(progress)")
-            if progress >= 1 {
-                print("当前歌曲播放完毕，自动播放下一首！")
-                onPlayNext()
-            } else {
-                DispatchQueue.main.async {
-                    self.currentTimeLabel.text = BAAudioPlayer.shared.getCurrentTime().stringByTime()
-                    self.slider.value = progress
-                }
+            DispatchQueue.main.async {
+                self.currentTimeLabel.text = BAAudioPlayer.shared.getCurrentTime().stringByTime()
+                self.slider.value = progress
             }
         }
         
@@ -58,11 +50,16 @@ class BAMusicPlayView: UIView {
             }
         }
         
-        BAAudioPlayer.shared.onPlaying = { [weak self] in
+        //播放状态监听
+        BAAudioPlayer.shared.onPlayState = { [weak self] state in
             guard let self = self else { return }
-
+            
             DispatchQueue.main.async {
-                self.lrcFullView.lrcFileName = BAAudioPlayer.shared.currentMusic.lrcname
+                if state == .playing {
+                    self.lrcFullView.lrcFileName = BAAudioPlayer.shared.currentMusic.lrcname
+                } else if state == .end {
+                    self.onPlayNext()
+                }
             }
         }
     }
@@ -90,10 +87,10 @@ class BAMusicPlayView: UIView {
         
         return view
     }()
-        
+    
     lazy var naviView: UIView = {
         let view = UIView()
-//        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
+        //        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
         
         return view
     }()
@@ -102,7 +99,7 @@ class BAMusicPlayView: UIView {
         let button = UIButton(type: .custom)
         button.setImage(UIImage.init(named: "miniplayer_btn_playlist_close"), for: .normal)
         button.addTarget(self, action: #selector(onBack), for:  .touchUpInside)
-
+        
         return button
     }()
     lazy var detailButton: UIButton = {
@@ -125,7 +122,7 @@ class BAMusicPlayView: UIView {
     
     lazy var infoView: UIView = {
         let view = UIView()
-//        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
+        //        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
         view.isUserInteractionEnabled = true
         
         return view
@@ -150,7 +147,7 @@ class BAMusicPlayView: UIView {
     //专辑图片
     lazy var trueImageView:UIImageView = {
         let imgV = UIImageView()
-//        imgV.backgroundColor = UIColor.red
+        //        imgV.backgroundColor = UIColor.red
         imgV.image = UIImage.init(named: "ddd")
         imgV.isUserInteractionEnabled = true
         
@@ -159,7 +156,7 @@ class BAMusicPlayView: UIView {
     
     lazy var lrcView: UIView = {
         let view = UIView()
-//        view.backgroundColor = .yellow.withAlphaComponent(0.1)
+        //        view.backgroundColor = .yellow.withAlphaComponent(0.1)
         
         return view
     }()
@@ -178,7 +175,7 @@ class BAMusicPlayView: UIView {
     
     lazy var bottomView: UIView = {
         let view = UIView()
-//        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
+        //        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
         view.isUserInteractionEnabled = true
         
         return view
@@ -252,8 +249,8 @@ class BAMusicPlayView: UIView {
     
     lazy var lrcFullView = {
         let view = BALrcView()
-//        view.backgroundColor = .yellow.withAlphaComponent(0.1)
-
+        //        view.backgroundColor = .yellow.withAlphaComponent(0.1)
+        
         view.updateCurrentLrcs = { [weak self] currentLrcs in
             guard let self = self else { return }
             
@@ -274,7 +271,7 @@ class BAMusicPlayView: UIView {
         scrollView.isScrollEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: 0)
-
+        
         return scrollView
     }()
 }
@@ -286,7 +283,7 @@ extension BAMusicPlayView {
         songNameLabel.text = music.name
         singerLabel.text = music.singer
         trueImageView.image = UIImage(named: music.icon ?? "")
-
+        
         updateTime()
     }
     
@@ -338,7 +335,7 @@ extension BAMusicPlayView {
     
     func updatePlayView() -> Void {
         playOrPauseButton.setImage(UIImage.init(named: "player_btn_pause_normal"), for: .normal)
-
+        
         //继续动画旋转
         trueImageView.layer.resumeAnim()
         if rotationAnim == nil {
