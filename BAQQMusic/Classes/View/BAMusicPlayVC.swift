@@ -20,10 +20,35 @@ class BAMusicPlayVC: UIViewController {
     }
     
     func initUI() {
-        view.addSubview(playView)
-        playView.snp.makeConstraints { make in
+        
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        scrollView.addSubview(playView)
+        playView.snp.makeConstraints { make in
+            make.top.left.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.height.equalTo(SCREEN_HEIGHT)
+        }
+        
+        scrollView.addSubview(lrcView)
+        lrcView.snp.makeConstraints { make in
+            make.left.equalTo(playView.snp.right).offset(0)
+            make.top.equalToSuperview()
+            make.width.equalTo(SCREEN_WIDTH)
+            make.height.equalTo(SCREEN_HEIGHT)
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        scrollView.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        scrollView.contentSize = CGSize(width: SCREEN_WIDTH * 2, height: SCREEN_HEIGHT)
     }
     
     func initData() {
@@ -37,7 +62,7 @@ class BAMusicPlayVC: UIViewController {
                 print("数据加载异常，请检查数据")
                 return
             }
-           
+            
             playView.onPlayOrPause()
             BAAudioPlayer.shared.player.delegate = self
         }
@@ -55,11 +80,33 @@ class BAMusicPlayVC: UIViewController {
         return view
     }()
     
+    lazy var lrcView = {
+        let view = BALrcView()
+        
+        return view
+    }()
+    
+    lazy var scrollView = {
+        let scrollView = UIScrollView()
+        scrollView.bounces = true
+        scrollView.isPagingEnabled = true
+        scrollView.isScrollEnabled = true
+        scrollView.delegate = self
+        scrollView.backgroundColor = .yellow.withAlphaComponent(0.1)
+        
+        return scrollView
+    }()
+    
 }
 
-extension BAMusicPlayVC {
+extension BAMusicPlayVC: UIScrollViewDelegate {
     
-    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offset_X = scrollView.contentOffset.x;
+        let currentPage = ceil(offset_X/SCREEN_WIDTH)
+        print("当前页面：\(currentPage)")
+        
+    }
 }
 
 //MARK: AVAudioPlayerDelegate

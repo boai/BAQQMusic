@@ -67,6 +67,7 @@
 		C4F8D2002C4F94FF00F5204E /* BAAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D1FF2C4F94FF00F5204E /* BAAudioPlayer.swift */; };
 		C4F8D2022C4F961700F5204E /* BAMusicPlayVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2012C4F961700F5204E /* BAMusicPlayVC.swift */; };
 		C4F8D2042C4F9EC400F5204E /* BAMusicPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2032C4F9EC400F5204E /* BAMusicPlayView.swift */; };
+		C4F8D2062C4FC2F800F5204E /* BALrcView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F8D2052C4FC2F800F5204E /* BALrcView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +135,7 @@
 		C4F8D1FF2C4F94FF00F5204E /* BAAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BAAudioPlayer.swift; path = ../../../../BAQQMusic2/BAQQMusic/Classes/Tools/BAAudioPlayer.swift; sourceTree = "<group>"; };
 		C4F8D2012C4F961700F5204E /* BAMusicPlayVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayVC.swift; sourceTree = "<group>"; };
 		C4F8D2032C4F9EC400F5204E /* BAMusicPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BAMusicPlayView.swift; sourceTree = "<group>"; };
+		C4F8D2052C4FC2F800F5204E /* BALrcView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BALrcView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +220,7 @@
 				C47AD2742C4DE81300FA0B42 /* LrcViewCell.swift */,
 				C4F8D2032C4F9EC400F5204E /* BAMusicPlayView.swift */,
 				C4F8D1FD2C4F78B400F5204E /* BAHomeVC.swift */,
+				C4F8D2052C4FC2F800F5204E /* BALrcView.swift */,
 				C4F8D2012C4F961700F5204E /* BAMusicPlayVC.swift */,
 			);
 			path = View;
@@ -487,6 +490,7 @@
 				C4F8D2042C4F9EC400F5204E /* BAMusicPlayView.swift in Sources */,
 				C47AD2AA2C4DE81500FA0B42 /* CALayer-Extension.swift in Sources */,
 				C47AD2AB2C4DE81500FA0B42 /* Extension+TimeInterval.swift in Sources */,
+				C4F8D2062C4FC2F800F5204E /* BALrcView.swift in Sources */,
 				C47AD2AE2C4DE81500FA0B42 /* LrcScrollView.swift in Sources */,
 				C47AD2A92C4DE81500FA0B42 /* MusicModel.swift in Sources */,
 				C47AD2AF2C4DE81500FA0B42 /* LrcViewCell.swift in Sources */,

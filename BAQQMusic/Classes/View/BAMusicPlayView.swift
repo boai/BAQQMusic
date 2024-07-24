@@ -66,6 +66,7 @@ class BAMusicPlayView: UIView {
     lazy var bgView: UIView = {
         let view = UIView()
         view.backgroundColor = .white//.withAlphaComponent(0.1)
+        view.isUserInteractionEnabled = true
         
         return view
     }()
@@ -119,6 +120,7 @@ class BAMusicPlayView: UIView {
     lazy var infoView: UIView = {
         let view = UIView()
 //        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
+        view.isUserInteractionEnabled = true
         
         return view
     }()
@@ -128,19 +130,23 @@ class BAMusicPlayView: UIView {
         lab.textColor = UIColor.lightGray
         lab.text = "歌手"
         lab.sizeToFit()
+        
         return lab
     }()
     //CD圆盘边框图层
     lazy var musicImageView:UIImageView = {
-        let bgV = UIImageView()
-        bgV.backgroundColor = UIColor.darkGray
-        return bgV
+        let imgV = UIImageView()
+        imgV.backgroundColor = UIColor.darkGray
+        imgV.isUserInteractionEnabled = true
+        
+        return imgV
     }()
     //专辑图片
     lazy var trueImageView:UIImageView = {
         let imgV = UIImageView()
 //        imgV.backgroundColor = UIColor.red
         imgV.image = UIImage.init(named: "ddd")
+        imgV.isUserInteractionEnabled = true
         
         return imgV
     }()
@@ -155,6 +161,7 @@ class BAMusicPlayView: UIView {
     lazy var bottomView: UIView = {
         let view = UIView()
 //        view.backgroundColor = .yellow//.withAlphaComponent(0.1)
+        view.isUserInteractionEnabled = true
         
         return view
     }()

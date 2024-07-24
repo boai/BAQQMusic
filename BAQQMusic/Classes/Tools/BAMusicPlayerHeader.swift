@@ -9,6 +9,11 @@ import UIKit
 import Foundation
 
 
+/// 屏幕宽高
+public let SCREEN_WIDTH = UIScreen.main.bounds.size.width
+public let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
+
+
 public func getCurrentWindow()->UIWindow? {
     var window = UIApplication.shared.delegate?.window
     if #available(iOS 13.0, *) {
